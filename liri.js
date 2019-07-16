@@ -88,7 +88,7 @@ function spotifyThis(songName) {
         .search({ type: 'track', query: songName, limit: 1, })
         .then(function (response) {
             if (songName === undefined) {
-                songName = "The Sign by ace of base"
+                songName = "The Sign ace"
                 return spotifyThis(songName)
             } else {
                 var spot = response.tracks.items[0]
@@ -120,7 +120,7 @@ function spotifyThis(songName) {
 function doThis() {
     fs.readFile("random.txt", "utf8", function (error, data) {
 
-        // If the code experiences any errors it will log the error to the console.
+        
         if (error) {
             return console.log(error);
         }
@@ -134,11 +134,25 @@ function doThis() {
 
         spotifyThis(name);
 
-        // We will then re-display the content as an array for later use.
+        
         console.log(dataArr);
 
     });
 
+}
+
+function addThis() {
+    fs.appendFile("random.txt",", "  + "spotify-this-song," + "'" + process.argv[3] + "'", function (err) {
+
+        
+        if (err) {
+            return console.log(err);
+        }
+
+        
+        console.log("random.txt was updated!");
+
+    });
 }
 
 function runcommand(command, data) {
@@ -154,7 +168,10 @@ function runcommand(command, data) {
     if (command === "do-what-it-says") {
         doThis()
     }
+    if (command === "add-this"){
+        addThis()
+    }
 
 }
-// var term = process.argv.slice(3).join(" ");
-runcommand(command, process.argv[3])
+var term = process.argv.slice(3).join(" ");
+runcommand(command, term)
