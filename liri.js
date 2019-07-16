@@ -156,4 +156,5 @@ function runcommand(command, data) {
     }
 
 }
+// var term = process.argv.slice(3).join(" ");
 runcommand(command, process.argv[3])
