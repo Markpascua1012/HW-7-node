@@ -16,13 +16,13 @@ var spotify = new Spotify(keys.spotify);
 
 var command = process.argv[2];
 
-var artist = process.argv[3];
 
 
 
 
 
-if (command === "concert-this") {
+
+function concertThis (artist) {
 
     // node liri.js concert-this <artist/band name here>
     axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp").then(function (response) {
@@ -44,8 +44,8 @@ if (command === "concert-this") {
 }
 
 
-if (command === "movie-this") {
-    var movieName = process.argv[3];
+function movieThis (movieName) {
+    
     axios.get("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy").then(function (response) {
         if (!movieName) {
             console.log("If you haven't watched Mr. Nobody, then you should: http://www.imdb.com/title/tt0485947/")
@@ -75,8 +75,7 @@ if (command === "movie-this") {
 
 
 
-if (command === "spotify-this-song") {
-    var songName = process.argv[3]
+function spotifyThis(songName) {
     spotify
         .search({ type: 'track', query: songName, limit: 1, })
         .then(function (response) {
@@ -104,7 +103,7 @@ if (command === "spotify-this-song") {
 // The album that the song is from
 
 
-if (command === "do-what-it-says") {
+function doThis () {
     fs.readFile("random.txt", "utf8", function (error, data) {
 
         // If the code experiences any errors it will log the error to the console.
@@ -127,3 +126,20 @@ if (command === "do-what-it-says") {
     });
 
 } 
+
+function runcommand (command, data){
+    if (command==="concert-this"){
+        concertThis(data)
+    };
+    if (command === "movie-this"){
+        movieThis(data)
+    }
+    if (command === "spotify-this-song"){
+        spotifyThis(data)
+    }
+    if (command === "do-what-it-says"){
+        doThis()
+    }
+    
+}
+runcommand(command, process.argv[3])
